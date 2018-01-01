@@ -1,18 +1,21 @@
 import React, {Component} from 'react';
 import {StyleSheet, View, Text, Image, TouchableHighlight} from 'react-native';
+import {Actions} from 'react-native-router-flux';
 
 class Home extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Image style={styles.img} source={require('../img/01.jpg')} />
+      <View>
+        <Image style={styles.img} source={require('../img/01.jpg')}/>
         <View style={styles.content}>
           <Text style={styles.title}>Kudos</Text>
           <Text style={styles.text}>Your small gestures of gratitude</Text>
-          <TouchableHighlight style={styles.btn}>
+          <TouchableHighlight
+            onPress={Actions.signIn}
+            style={styles.btn}>
             <Text style={styles.btnText}>Sign in</Text>
           </TouchableHighlight>
-          <TouchableHighlight>
+          <TouchableHighlight onPress={Actions.signUp}>
             <Text style={styles.textSmall}>Don't have an account? Sign up</Text>
           </TouchableHighlight>
         </View>
@@ -22,18 +25,16 @@ class Home extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  img: {
+    width: '100%',
+    height: '41%'
   },
   content: {
     alignItems: 'center',
     padding: 50
   },
-  img: {
-    width: '100%',
-    height: 200
-  },
   title: {
-    fontSize: 25,
+    fontSize: 27,
     color: '#47525E',
     marginBottom: 5
   },
@@ -44,11 +45,11 @@ const styles = StyleSheet.create({
   },
   btn: {
     backgroundColor: '#47525E',
-    borderRadius: 5,
-    paddingTop: 10,
-    paddingBottom: 10,
+    borderRadius: 9,
+    paddingTop: 12,
+    paddingBottom: 12,
     paddingHorizontal:25,
-    marginBottom: 10,
+    marginBottom: 12,
     width: '100%',
     alignItems: 'center'
   },
