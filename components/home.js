@@ -5,7 +5,7 @@ import {Actions} from 'react-native-router-flux';
 class Home extends Component {
   render() {
     return (
-      <View>
+      <View style={styles.wrapper}>
         <Image style={styles.img} source={require('../img/01.jpg')}/>
         <View style={styles.content}>
           <Text style={styles.title}>Kudos</Text>
@@ -18,6 +18,9 @@ class Home extends Component {
           <TouchableHighlight onPress={Actions.signUp}>
             <Text style={styles.textSmall}>Don't have an account? Sign up</Text>
           </TouchableHighlight>
+          <TouchableHighlight onPress={Actions.tabBar}>
+            <Text style={styles.textSmall}>Tabs</Text>
+          </TouchableHighlight>
         </View>
       </View>
       )
@@ -25,6 +28,10 @@ class Home extends Component {
 }
 
 const styles = StyleSheet.create({
+  wrapper: {
+    backgroundColor: '#fff',
+    flexGrow: 1
+  },
   img: {
     width: '100%',
     height: '41%'
