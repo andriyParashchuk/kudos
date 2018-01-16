@@ -46,7 +46,7 @@ class SignIn extends Component {
   async logIn(email, pass) {
     try {
       await firebase.auth().signInWithEmailAndPassword(email, pass);
-      Actions.drawer();
+      Actions.tabBar();
       // console.log("Logged In!");
     } catch (error) {
       // console.log(error.toString())

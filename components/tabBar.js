@@ -57,8 +57,8 @@ const styles = StyleSheet.create({
   },
   tabBar__button: {
     flexGrow: 1,
-    paddingTop: 12,
-    paddingBottom: 12,
+    paddingTop: 7,
+    paddingBottom: 7,
     alignItems: 'center'
   },
   tabBar__icon: {
@@ -66,18 +66,18 @@ const styles = StyleSheet.create({
     height: 20,
     borderRadius: 5,
     marginBottom: 2,
-    backgroundColor: '#E5E9F2'
+    backgroundColor: '#e5e9f2'
   },
   tabBar__icon_active: {
-    backgroundColor: '#343F4B'
+    backgroundColor: '#343f4b'
   },
   tabBar__text: {
     fontSize: 12,
     fontWeight: 'bold',
-    color: '#9DA9B9'
+    color: '#8190a5'
   },
   tabBar__text_active: {
-    color: '#343F4B'
+    color: '#343f4b'
   }
 });
 

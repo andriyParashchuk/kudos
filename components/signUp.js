@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
 import {StyleSheet, View, Text, KeyboardAvoidingView, TextInput, TouchableHighlight} from 'react-native';
 import firebase from 'firebase';
+import {Actions} from 'react-native-router-flux';
 
 class SignUp extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      fullName: '',
+      firstName: '',
+      lastName: '',
       email: '',
       password: ''
     };
@@ -16,13 +18,23 @@ class SignUp extends Component {
       <KeyboardAvoidingView style={styles.content}>
           <TextInput
             autoFocus
-            ref={'fullName'}
+            ref={'firstName'}
             underlineColorAndroid="transparent"
             selectTextOnFocus
             style={styles.input}
-            placeholder="Full Name"
+            placeholder="First Name"
             placeholderTextColor="#A3ADBD"
-            onChangeText={(fullName) => this.setState({fullName})}
+            onChangeText={(firstName) => this.setState({firstName})}
+            onSubmitEditing={(e) => {this.refs.lastName.focus()}}
+          />
+          <TextInput
+            ref={'lastName'}
+            underlineColorAndroid="transparent"
+            selectTextOnFocus
+            style={styles.input}
+            placeholder="Last Name"
+            placeholderTextColor="#A3ADBD"
+            onChangeText={(lastName) => this.setState({lastName})}
             onSubmitEditing={(e) => {this.refs.email.focus()}}
           />
           <TextInput
@@ -53,14 +65,35 @@ class SignUp extends Component {
       </KeyboardAvoidingView>
       )
   }
+
   async signUp(email, pass) {
     try {
       await firebase.auth().createUserWithEmailAndPassword(email, pass);
-      // console.log("Account created");
+      this.logIn(email, pass)
     } catch (error) {
       // console.log(error.toString())
     }
   }
+
+  async logIn(email, pass) {
+    try {
+      await firebase.auth().signInWithEmailAndPassword(email, pass);
+      const userId = firebase.auth().currentUser.uid;
+      this.setUser(userId, this.state.firstName, this.state.lastName);
+      Actions.tabBar();
+    } catch (error) {
+      // console.log(error.toString())
+    }
+  }
+
+  async setUser(userId, firstName, lastName) {
+    firebase.database().ref('users/' + userId).set({
+      firstName: firstName,
+      lastName: lastName,
+      countKudos: 0
+    });
+  }
+
 }
 
 const styles = StyleSheet.create({

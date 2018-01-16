@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, TouchableOpacity} from 'react-native';
-import {Actions} from 'react-native-router-flux';
 
 class EditButton extends Component {
   render() {
     return (
         <TouchableOpacity style={styles.editButton}>
-          <Text style={styles.saveButton__text}>Save</Text>
+          <Text style={styles.saveButton__text}>Edite</Text>
         </TouchableOpacity>
       )
   }

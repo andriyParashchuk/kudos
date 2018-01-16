@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, View, Text, Image, TouchableHighlight} from 'react-native';
+import {StyleSheet, View, Text, Image, TouchableHighlight, TouchableOpacity} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 
 class Home extends Component {
@@ -15,12 +15,9 @@ class Home extends Component {
             style={styles.btn}>
             <Text style={styles.btnText}>Sign in</Text>
           </TouchableHighlight>
-          <TouchableHighlight onPress={Actions.signUp}>
+          <TouchableOpacity onPress={Actions.signUp}>
             <Text style={styles.textSmall}>Don't have an account? Sign up</Text>
-          </TouchableHighlight>
-          <TouchableHighlight onPress={Actions.tabBar}>
-            <Text style={styles.textSmall}>Tabs</Text>
-          </TouchableHighlight>
+          </TouchableOpacity>
         </View>
       </View>
       )
