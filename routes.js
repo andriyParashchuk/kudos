@@ -14,6 +14,7 @@ import SaveButton from './components/saveButton';
 import EditButton from './components/editButton';
 import Placeholder from './components/placeholder';
 import SignOut from './components/signOut';
+import CreateKudo from './components/createKudo';
 
 class Routes extends Component {
   render() {
@@ -47,14 +48,22 @@ class Routes extends Component {
                 animationEnabled={false}
                 tabBarPosition="bottom">
                 <Scene key="exploreTab" title="Explore Kudos">
-                  <Scene key="explore" component={Explore} />
+                  <Scene key="explore" component={Explore}/>
                   <Scene
                     key="footerTabs"
                     component={TabBar}
                     renderRightButton={() => <SaveButton/>}
                     hideTabBar={true}/>
                 </Scene>
-                <Scene key="users" component={Users} title="Choose a User to send a Kudo"/>
+                <Scene key="usersTab" title="Choose a User to send a Kudo">
+                  <Scene key="users" component={Users}/>
+                  <Scene
+                    key="createKudo"
+                    component={CreateKudo}
+                    title="Create Kudo"
+                    renderRightButton={() => <SaveButton/>}
+                    hideTabBar={true}/>
+                </Scene>
                 <Scene
                   key="profile"
                   component={Profile}
@@ -85,7 +94,7 @@ class Routes extends Component {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         // Actions.tabBar();
-        Actions.profile();
+        Actions.users();
       } else {
         Actions.home();
       }
