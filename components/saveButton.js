@@ -5,7 +5,9 @@ import {Actions} from 'react-native-router-flux';
 class SaveButton extends Component {
   render() {
     return (
-        <TouchableOpacity style={styles.saveButton}>
+        <TouchableOpacity style={styles.saveButton}
+          // onPress={Actions.refresh()}
+          >
           <Text style={styles.saveButton__text}>Save</Text>
         </TouchableOpacity>
       )

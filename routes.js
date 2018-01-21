@@ -16,6 +16,8 @@ import Placeholder from './components/placeholder';
 import SignOut from './components/signOut';
 import CreateKudo from './components/createKudo';
 
+import CameraRoll from './components/cameraRoll';
+
 class Routes extends Component {
   render() {
     return (
@@ -83,6 +85,10 @@ class Routes extends Component {
               component={SignUp}
               title="SignUp"
               renderRightButton={() => <Placeholder/>}/>
+
+            <Scene
+              key="cameraRoll"
+              component={CameraRoll}/>
 
           </Stack>
         </Overlay>
