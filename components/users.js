@@ -62,10 +62,12 @@ class Users extends Component {
               <Text style={styles.usersBox__countKudos}>has {user.countKudos} kudos</Text>
             </View>
           </View>
-          <TouchableOpacity onPress={() => Actions.createKudo({
-                                                                firstName: user.firstName,
-                                                                lastName: user.lastName
-                                                              })}>
+          <TouchableOpacity
+            onPress={() => Actions.createKudo({
+              firstName: user.firstName,
+              lastName: user.lastName,
+              receiver: user.id
+            })}>
             <Image style={styles.usersBox__img} source={require('../img/arrow-right.png')}/>
           </TouchableOpacity>
         </View>

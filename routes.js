@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {StyleSheet, ActivityIndicator, View} from 'react-native';
 import {Router, Scene, Stack, Tabs, Overlay, Actions} from 'react-native-router-flux';
 import firebase from 'firebase';
 
@@ -15,11 +16,25 @@ import EditButton from './components/editButton';
 import Placeholder from './components/placeholder';
 import SignOut from './components/signOut';
 import CreateKudo from './components/createKudo';
-
+import Kudo from './components/kudo';
 import CameraRoll from './components/cameraRoll';
 
 class Routes extends Component {
+  constructor() {
+    super();
+    this.state = {
+      isLoading: true
+    }
+  }
+
   render() {
+    if (this.state.isLoading) {
+      return (
+        <View style={styles.loader}>
+          <ActivityIndicator/>
+        </View>
+      )
+    }
     return (
       <Router
         headerStyle={{
@@ -90,6 +105,12 @@ class Routes extends Component {
               key="cameraRoll"
               component={CameraRoll}/>
 
+            <Scene
+              key="kudo"
+              title="Kudo"
+              component={Kudo}
+              renderRightButton={() => <EditButton/>}/>
+
           </Stack>
         </Overlay>
       </Router>
@@ -98,14 +119,25 @@ class Routes extends Component {
 
   componentDidMount() {
     firebase.auth().onAuthStateChanged((user) => {
+      this.setState({
+        isLoading: false
+      });
       if (user) {
-        // Actions.tabBar();
-        Actions.users();
+        Actions.tabBar();
       } else {
         Actions.home();
       }
     });
   }
 }
+
+const styles = StyleSheet.create({
+  loader: {
+    backgroundColor: '#fff',
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
+});
 
 export default Routes;

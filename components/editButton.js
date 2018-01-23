@@ -5,7 +5,7 @@ class EditButton extends Component {
   render() {
     return (
         <TouchableOpacity style={styles.editButton}>
-          <Text style={styles.saveButton__text}>Edite</Text>
+          <Text style={styles.editButton__text}>Edite</Text>
         </TouchableOpacity>
       )
   }

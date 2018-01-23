@@ -90,7 +90,8 @@ class SignUp extends Component {
     firebase.database().ref('users/' + userId).set({
       firstName: firstName,
       lastName: lastName,
-      countKudos: 0
+      countKudos: 0,
+      id: userId
     });
   }
 

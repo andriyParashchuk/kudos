@@ -23,11 +23,11 @@ class TabBar extends Component {
           style={styles.tabBar__button}>
           <Text style={[
             styles.tabBar__icon,
-            Actions.currentScene === '_users' ? styles.tabBar__icon_active : []
+            Actions.currentScene === 'users' ? styles.tabBar__icon_active : []
           ]}></Text>
           <Text style={[
             styles.tabBar__text,
-            Actions.currentScene === '_users' ? styles.tabBar__text_active : []
+            Actions.currentScene === 'users' ? styles.tabBar__text_active : []
           ]}>Users</Text>
         </TouchableOpacity>
         <TouchableOpacity

@@ -9,22 +9,39 @@ class CreateKudo extends Component {
     this.state = {
       firstName: props.firstName,
       lastName: props.lastName,
+      receiver: props.receiver,
+      sender: '',
       photo: require('../img/03.png'),
-      kudoText: ''
+      kudoText: '',
     }
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.setState({
+            sender: user.uid
+        });
+      }
+    });
   }
 
   componentWillReceiveProps(props) {
-    if (!props) {
-      alet('ok')
-    }
     this.setState({
       photo: {uri: props.photo}
     });
   }
 
-  setKudo() {
-    alert('save')
+  async setKudo() {
+    const date = new Date();
+    firebase.database().ref('kudos/' + date).set({
+      photo: this.state.photo,
+      text: this.state.kudoText,
+      receiver: this.state.receiver,
+      sender: this.state.sender,
+      date: date.toString(),
+      likes: {
+        likeCount: 0
+      }
+    });
+    Actions.explore();
   }
 
   render() {
@@ -44,12 +61,12 @@ class CreateKudo extends Component {
           </View>
         </View>
 
-        <TouchableHighlight style={styles.createKudoPreview} onPress={Actions.cameraRoll}>
+        <TouchableHighlight style={styles.createKudoPreview}  onPress={Actions.cameraRoll}>
           <Image style={styles.createKudoPreview__img} source={this.state.photo}/>
         </TouchableHighlight>
 
-        <TouchableHighlight style={styles.createKudo__btn}>
-            <Text style={styles.createKudo__btnText}>Sign in</Text>
+        <TouchableHighlight style={styles.createKudo__btn} onPress={() => this.setKudo()}>
+            <Text style={styles.createKudo__btnText}>Save</Text>
         </TouchableHighlight>
 
         <TextInput
@@ -61,10 +78,6 @@ class CreateKudo extends Component {
           placeholderTextColor="#8190a5"
           onChangeText={(kudoText) => this.setState({kudoText})}
         />
-
-        <TouchableHighlight style={styles.createKudo__btn} onPress={() => this.setKudo()}>
-            <Text style={styles.createKudo__btnText}>Save</Text>
-        </TouchableHighlight>
 
       </KeyboardAvoidingView>
     )
