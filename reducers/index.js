@@ -1,8 +1,8 @@
-import { combineReducers } from 'redux';
-import { items, itemsHasErrored, itemsIsLoading } from './items';
+import {combineReducers} from 'redux';
+import {authUserId, authHasErrored, authIsLoading} from './auth';
 
 export default combineReducers({
-    items,
-    itemsHasErrored,
-    itemsIsLoading
+    authUserId,
+    authHasErrored,
+    authIsLoading
 });

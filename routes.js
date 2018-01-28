@@ -1,8 +1,12 @@
 import React, {Component} from 'react';
 import {StyleSheet, ActivityIndicator, View} from 'react-native';
 import {Router, Scene, Stack, Tabs, Overlay, Actions} from 'react-native-router-flux';
+import {createStore, applyMiddleware} from 'redux';
+import createSagaMiddleware from 'redux-saga';
 import firebase from 'firebase';
+import {connect} from 'react-redux'
 
+import {auth} from './actions/auth';
 import Home from './components/home';
 import SignIn from './components/signIn';
 import SignUp from './components/signUp';
@@ -20,15 +24,8 @@ import Kudo from './components/kudo';
 import CameraRoll from './components/cameraRoll';
 
 class Routes extends Component {
-  constructor() {
-    super();
-    this.state = {
-      isLoading: true
-    }
-  }
-
   render() {
-    if (this.state.isLoading) {
+    if (this.props.isLoading) {
       return (
         <View style={styles.loader}>
           <ActivityIndicator/>
@@ -118,18 +115,23 @@ class Routes extends Component {
   }
 
   componentDidMount() {
-    firebase.auth().onAuthStateChanged((user) => {
-      this.setState({
-        isLoading: false
-      });
-      if (user) {
-        Actions.tabBar();
-      } else {
-        Actions.home();
-      }
-    });
+    this.props.auth();
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    userId: state.authUserId,
+    hasErrored: state.authHasErrored,
+    isLoading: state.authIsLoading
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    auth: () => dispatch(auth());
+  };
+};
 
 const styles = StyleSheet.create({
   loader: {
@@ -140,4 +142,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Routes;
+export default connect(mapStateToProps, mapDispatchToProps)(Routes);
