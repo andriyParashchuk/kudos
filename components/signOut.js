@@ -17,7 +17,7 @@ class SignOut extends Component {
       await firebase.auth().signOut();
       Actions.home();
     } catch (error) {
-      // console.log(error);
+      console.log(error);
     }
   }
 }

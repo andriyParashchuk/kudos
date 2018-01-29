@@ -24,6 +24,13 @@ import Kudo from './components/kudo';
 import CameraRoll from './components/cameraRoll';
 
 class Routes extends Component {
+  // constructor() {
+  //   super();
+  //   this.state = {
+  //     isLoading: true
+  //   }
+  // }
+
   render() {
     if (this.props.isLoading) {
       return (
@@ -31,6 +38,10 @@ class Routes extends Component {
           <ActivityIndicator/>
         </View>
       )
+    } else {
+      setTimeout(() => {
+        this.onStart();
+      }, 0);
     }
     return (
       <Router
@@ -54,7 +65,7 @@ class Routes extends Component {
 
             <Scene key="home" component={Home} hideNavBar={true}/>
 
-            <Scene hideNavBar={true}>
+            <Scene key="tabBarHolder" hideNavBar={true}>
               <Tabs
                 key="tabBar"
                 tabBarComponent={TabBar}
@@ -116,7 +127,26 @@ class Routes extends Component {
 
   componentDidMount() {
     this.props.auth();
+    // firebase.auth().onAuthStateChanged((user) => {
+    //   this.setState({
+    //     isLoading: false
+    //   });
+    //   if (user) {
+    //     Actions.tabBar();
+    //   } else {
+    //     Actions.home();
+    //   }
+    // });
   }
+
+  onStart() {
+    if (this.props.userId.length > 0) {
+      Actions.tabBar();
+    } else {
+      Actions.home();
+    }
+  }
+
 }
 
 const mapStateToProps = (state) => {
@@ -129,7 +159,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    auth: () => dispatch(auth());
+    auth: () => dispatch(auth())
   };
 };
 
@@ -143,3 +173,4 @@ const styles = StyleSheet.create({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Routes);
+// export default Routes;

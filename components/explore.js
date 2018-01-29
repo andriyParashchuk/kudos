@@ -74,11 +74,6 @@ class Explore extends Component {
 
   onLike(kudoId, likeCount, likedUsers) {
     let userId = [];
-    likedUsers.forEach((item) => {
-      if (item === this.state.userId) {
-        return
-      }
-    });
     if (likedUsers) {
       userId = likedUsers.concat(this.state.userId);
     } else {
@@ -114,7 +109,7 @@ class Explore extends Component {
     },
     exploreHeart__img: {
       width: 50,
-      height: 50,
+      height: 45,
     },
     exploreHeart__text: {
       color: '#fff',

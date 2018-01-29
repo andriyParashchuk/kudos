@@ -23,8 +23,6 @@ export function authSuccess(userId) {
 
 export function auth() {
   return (dispatch) => {
-    dispatch(authIsLoading(true));
-
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         dispatch(authIsLoading(false));
@@ -33,6 +31,5 @@ export function auth() {
         dispatch(authHasErrored(true));
       }
     });
-
   };
 }

@@ -67,7 +67,7 @@ class Kudo extends Component {
     },
     kudoHeart__img: {
       width: 50,
-      height: 50,
+      height: 45,
     },
     kudoHeart__text: {
       color: '#fff',
