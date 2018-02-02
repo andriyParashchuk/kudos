@@ -2,42 +2,18 @@ import React, {Component} from 'react';
 import {StyleSheet, View, Text, ListView, Image, KeyboardAvoidingView, TextInput, TouchableHighlight, ActivityIndicator, TouchableOpacity} from 'react-native';
 import firebase from 'firebase';
 import {Actions} from 'react-native-router-flux';
-// import {connect} from 'react-redux';
+import {connect} from 'react-redux';
 
-// import PropTypes from "prop-types";
-// import {fetchData} from '../actions/fetchData';
+import {fetchData} from '../actions/fetchData';
 
 class Users extends Component {
-  constructor() {
-    super();
-    this.state = {
-      isLoading: true
-    }
-    this.getUsers();
+
+  componentDidMount() {
+    this.props.fetchData('users');
   }
-
-  getUsers() {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        firebase.database().ref('/users').once('value').then((data) => {
-          let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-          this.setState({
-            dataSource: ds.cloneWithRows(data.val()),
-            isLoading: false
-          });
-        });
-      } else {
-      }
-    });
-  }
-
-  // componentDidMount() {
-  //   this.props.fetchData('users');
-  // }
-
 
   render() {
-    if (this.state.isLoading) {
+    if (this.props.isLoading) {
       return (
         <View style={styles.loader}>
           <ActivityIndicator/>
@@ -47,7 +23,8 @@ class Users extends Component {
     return (
       <View style={styles.usersWrapper}>
         <ListView
-          dataSource={this.state.dataSource}
+          enableEmptySections={true}
+          dataSource={this.props.dataSource}
           renderRow={(user) => this.getUser(user)}
         />
       </View>
@@ -84,23 +61,23 @@ class Users extends Component {
   }
 }
 
-// const dataSource = new ListView.DataSource({
-//   rowHasChanged: (r1, r2) => r1 !== r2
-// });
+const dataSource = new ListView.DataSource({
+  rowHasChanged: (r1, r2) => r1 !== r2
+});
 
-// const mapStateToProps = (state) => {
-//   return {
-//     dataSource: dataSource.cloneWithRows(state.fetchData),
-//     hasErrored: state.fetchHasErrored,
-//     isLoading: state.fetchIsLoading
-//   };
-// };
+const mapStateToProps = (state) => {
+  return {
+    dataSource: dataSource.cloneWithRows(state.fetchData),
+    hasErrored: state.fetchHasErrored,
+    isLoading: state.fetchIsLoading
+  };
+};
 
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     fetchData: (dataName) => dispatch(fetchData(dataName))
-//   };
-// };
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchData: (dataName) => dispatch(fetchData(dataName))
+  };
+};
 
 const styles = StyleSheet.create({
   usersWrapper: {
@@ -154,5 +131,4 @@ const styles = StyleSheet.create({
   }
 });
 
-// export default connect(mapStateToProps, mapDispatchToProps)(Users);
-export default Users;
+export default connect(mapStateToProps, mapDispatchToProps)(Users);

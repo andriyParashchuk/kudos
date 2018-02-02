@@ -2,35 +2,17 @@ import React, {Component} from 'react';
 import {StyleSheet, View, Text, ListView, Image, KeyboardAvoidingView, TextInput, TouchableHighlight, ActivityIndicator, TouchableOpacity} from 'react-native';
 import firebase from 'firebase';
 import {Actions} from 'react-native-router-flux';
+import {connect} from 'react-redux';
+
+import {fetchDataKudos} from '../actions/fetchDataKudos';
 
 class Explore extends Component {
-  constructor() {
-    super();
-    this.state = {
-      userId: '',
-      isLoading: true
-    }
-    this.getKudos();
-  }
-
-  getKudos() {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        firebase.database().ref('/kudos').once('value').then((data) => {
-          let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-          this.setState({
-            dataSource: ds.cloneWithRows(data.val()),
-            isLoading: false,
-            userId: user.uid
-          });
-        });
-      } else {
-      }
-    });
+  componentDidMount() {
+    this.props.fetchDataKudos('kudos');
   }
 
   render() {
-    if (this.state.isLoading) {
+    if (this.props.isLoading) {
       return (
         <View style={styles.loader}>
           <ActivityIndicator/>
@@ -40,7 +22,8 @@ class Explore extends Component {
     return (
       <View style={styles.exploreWrapper}>
         <ListView
-          dataSource={this.state.dataSource}
+          enableEmptySections={true}
+          dataSource={this.props.dataSource}
           renderRow={(kudo) => this.getKudo(kudo)}
         />
       </View>
@@ -86,50 +69,68 @@ class Explore extends Component {
   }
 }
 
-  const styles = StyleSheet.create({
-    exploreWrapper: {
-      flexGrow: 1,
-      backgroundColor: '#fff',
-      padding: 15
-    },
-    exploreBox: {
-      marginBottom: 10
-    },
-    exploreBox__img: {
-      width: '100%',
-      height: 180
-
-    },
-    exploreHeart: {
-      position:'absolute',
-      top: 10,
-      right: 10,
-      alignItems: 'center',
-      zIndex: 2
-    },
-    exploreHeart__img: {
-      width: 50,
-      height: 45,
-    },
-    exploreHeart__text: {
-      color: '#fff',
-      fontSize: 25,
-      position:'absolute',
-      top: 5,
-      zIndex: 3
-    },
-    exploreBox__text: {
-      backgroundColor: '#e9e9e9',
-      color: '#343f4b',
-      padding: 15,
-      fontSize: 18
-    },
-    loader: {
-      backgroundColor: '#fff',
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center'
-    }
+const dataSource = new ListView.DataSource({
+  rowHasChanged: (r1, r2) => r1 !== r2
 });
 
-export default Explore;
+const mapStateToProps = (state) => {
+  return {
+    dataSource: dataSource.cloneWithRows(state.fetchDataKudos),
+    hasErrored: state.fetchHasErroredKudos,
+    isLoading: state.fetchIsLoadingKudos
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchDataKudos: (dataName) => dispatch(fetchDataKudos(dataName))
+  };
+};
+
+const styles = StyleSheet.create({
+  exploreWrapper: {
+    flexGrow: 1,
+    backgroundColor: '#fff',
+    padding: 15
+  },
+  exploreBox: {
+    marginBottom: 10
+  },
+  exploreBox__img: {
+    width: '100%',
+    height: 180
+
+  },
+  exploreHeart: {
+    position:'absolute',
+    top: 10,
+    right: 10,
+    alignItems: 'center',
+    zIndex: 2
+  },
+  exploreHeart__img: {
+    width: 50,
+    height: 45,
+  },
+  exploreHeart__text: {
+    color: '#fff',
+    fontSize: 25,
+    position:'absolute',
+    top: 5,
+    zIndex: 3
+  },
+  exploreBox__text: {
+    backgroundColor: '#e9e9e9',
+    color: '#343f4b',
+    padding: 15,
+    fontSize: 18
+  },
+  loader: {
+    backgroundColor: '#fff',
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Explore);

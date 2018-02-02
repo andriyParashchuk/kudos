@@ -6,8 +6,7 @@ class SaveButton extends Component {
   render() {
     return (
         <TouchableOpacity style={styles.saveButton}
-          // onPress={Actions.refresh()}
-          >
+          onPress={() => Actions.refresh({save: true})}>
           <Text style={styles.saveButton__text}>Save</Text>
         </TouchableOpacity>
       )

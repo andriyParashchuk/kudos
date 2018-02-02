@@ -24,9 +24,14 @@ class CreateKudo extends Component {
   }
 
   componentWillReceiveProps(props) {
-    this.setState({
-      photo: {uri: props.photo}
-    });
+    if (props.save) {
+      this.setKudo();
+    }
+    if (props.photo) {
+      this.setState({
+        photo: {uri: props.photo}
+      });
+    }
   }
 
   async setKudo() {
@@ -61,12 +66,12 @@ class CreateKudo extends Component {
           </View>
         </View>
 
-        <TouchableHighlight style={styles.createKudoPreview}  onPress={Actions.cameraRoll}>
+        <TouchableHighlight style={styles.createKudoPreview}>
           <Image style={styles.createKudoPreview__img} source={this.state.photo}/>
         </TouchableHighlight>
 
-        <TouchableHighlight style={styles.createKudo__btn} onPress={() => this.setKudo()}>
-            <Text style={styles.createKudo__btnText}>Save</Text>
+        <TouchableHighlight style={styles.createKudo__btn} onPress={Actions.cameraRoll}>
+            <Text style={styles.createKudo__btnText}>Take a Photo</Text>
         </TouchableHighlight>
 
         <TextInput

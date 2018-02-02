@@ -14,10 +14,10 @@ export function fetchIsLoading(bool) {
   };
 }
 
-export function fetchSuccess(userId) {
+export function fetchSuccess(dataSource) {
   return {
     type: 'FETCH_DATA_SUCCESS',
-    userId
+    dataSource
   };
 }
 

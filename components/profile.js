@@ -26,7 +26,7 @@ class Profile extends Component {
           });
         });
       } else {
-        alert('Log out');
+        // alert('Log out');
       }
     });
   }
