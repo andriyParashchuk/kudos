@@ -5,6 +5,7 @@ import {createStore, applyMiddleware} from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import firebase from 'firebase';
 import {connect} from 'react-redux';
+import styles from './style';
 
 import {auth} from './actions/auth';
 import Home from './components/home';
@@ -32,7 +33,7 @@ class Routes extends Component {
   }
 
   renderScenes() {
-    if (this.props.userId.length === 0) {
+    if (this.props.userId.length > 0) {
       return (
         <Overlay>
           <Stack key="root">
@@ -214,14 +215,5 @@ const mapDispatchToProps = (dispatch) => {
     auth: () => dispatch(auth())
   };
 };
-
-const styles = StyleSheet.create({
-  loader: {
-    backgroundColor: '#fff',
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
-});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Routes);

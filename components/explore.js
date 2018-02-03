@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {StyleSheet, View, Text, ListView, Image, KeyboardAvoidingView, TextInput, TouchableHighlight, ActivityIndicator, TouchableOpacity} from 'react-native';
+import {View, Text, ListView, Image, KeyboardAvoidingView, TextInput, TouchableHighlight, ActivityIndicator, TouchableOpacity} from 'react-native';
+import styles from '../style';
 import firebase from 'firebase';
 import {Actions} from 'react-native-router-flux';
 import {connect} from 'react-redux';
@@ -86,51 +87,5 @@ const mapDispatchToProps = (dispatch) => {
     fetchDataKudos: (dataName) => dispatch(fetchDataKudos(dataName))
   };
 };
-
-const styles = StyleSheet.create({
-  exploreWrapper: {
-    flexGrow: 1,
-    backgroundColor: '#fff',
-    padding: 15
-  },
-  exploreBox: {
-    marginBottom: 10
-  },
-  exploreBox__img: {
-    width: '100%',
-    height: 180
-
-  },
-  exploreHeart: {
-    position:'absolute',
-    top: 10,
-    right: 10,
-    alignItems: 'center',
-    zIndex: 2
-  },
-  exploreHeart__img: {
-    width: 50,
-    height: 45,
-  },
-  exploreHeart__text: {
-    color: '#fff',
-    fontSize: 25,
-    position:'absolute',
-    top: 5,
-    zIndex: 3
-  },
-  exploreBox__text: {
-    backgroundColor: '#e9e9e9',
-    color: '#343f4b',
-    padding: 15,
-    fontSize: 18
-  },
-  loader: {
-    backgroundColor: '#fff',
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
-});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Explore);

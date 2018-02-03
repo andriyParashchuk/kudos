@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {StyleSheet, View, Text, Image, KeyboardAvoidingView, TextInput, TouchableHighlight, ActivityIndicator, TouchableOpacity} from 'react-native';
+import {View, Text, Image, KeyboardAvoidingView, TextInput, TouchableHighlight, ActivityIndicator, TouchableOpacity} from 'react-native';
+import styles from '../style';
 import firebase from 'firebase';
 
 class Profile extends Component {
@@ -26,11 +27,9 @@ class Profile extends Component {
           });
         });
       } else {
-        // alert('Log out');
       }
     });
   }
-
   render() {
     if (this.state.isLoading) {
       return (
@@ -58,49 +57,5 @@ class Profile extends Component {
     )
   }
 }
-
-  const styles = StyleSheet.create({
-    profileWrapper: {
-      flexGrow: 1,
-      backgroundColor: '#fff',
-      padding: 15
-    },
-    profileBox: {
-      backgroundColor: '#e9e9e9',
-      padding: 15,
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      marginBottom: 15
-    },
-    profileBox__holder: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'center'
-    },
-    profileBox__circle: {
-      width: 50,
-      height: 50,
-      borderRadius: 25,
-      backgroundColor: '#a1a1a1',
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginRight: 15
-    },
-    profileBox__initials: {
-      color: '#fff',
-      fontSize: 20
-    },
-    profileBox__fullName: {
-      color: '#343f4b',
-      fontSize: 18
-    },
-    loader: {
-      backgroundColor: '#fff',
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center'
-    }
-});
 
 export default Profile;

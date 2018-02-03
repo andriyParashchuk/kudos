@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, View, Text, ListView, Image, KeyboardAvoidingView, TextInput, TouchableHighlight, ActivityIndicator, TouchableOpacity} from 'react-native';
+import styles from '../style';
 import firebase from 'firebase';
 import {Actions} from 'react-native-router-flux';
 import {connect} from 'react-redux';
@@ -78,57 +79,5 @@ const mapDispatchToProps = (dispatch) => {
     fetchData: (dataName) => dispatch(fetchData(dataName))
   };
 };
-
-const styles = StyleSheet.create({
-  usersWrapper: {
-    flexGrow: 1,
-    backgroundColor: '#fff',
-    padding: 15
-  },
-  usersBox: {
-    backgroundColor: '#e9e9e9',
-    padding: 15,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: 15
-  },
-  usersBox__holder: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  usersBox__circle: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    backgroundColor: '#a1a1a1',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 15
-  },
-  usersBox__initials: {
-    color: '#fff',
-    fontSize: 20
-  },
-  usersBox__fullName: {
-    color: '#343f4b',
-    fontSize: 18
-  },
-  usersBox__countKudos: {
-    color: '#5a6978',
-    fontSize: 18
-  },
-  usersBox__img: {
-    width: 40,
-    height: 30
-  },
-  loader: {
-    backgroundColor: '#fff',
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
-});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Users);
